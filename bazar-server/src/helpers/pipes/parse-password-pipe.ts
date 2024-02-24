@@ -7,9 +7,10 @@ dotenv.config();
 @Injectable()
 export class ParsePasswordPipe implements PipeTransform {
   async transform(dto: any) {
+    console.log({ auth: process.env.AUTH_SECRET });
     if (dto.hasOwnProperty('password')) {
       const password = dto.password;
-      dto.password = await bcrypt.hash(password, process.env.PASSWORD_HASH);
+      dto.password = await bcrypt.hash(password, 12);
     }
     return dto;
   }
