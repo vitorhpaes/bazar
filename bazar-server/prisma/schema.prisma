@@ -12,3 +12,69 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       String @id @default(uuid())
+  username String @unique
+  fullName String
+  password String
+
+  @@map("users")
+}
+
+model Event {
+  id          String   @id @default(uuid())
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("events")
+}
+
+model ScheduleDay {
+  id        String   @id @default(uuid())
+  date      DateTime @unique
+  slots     Slot[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("schedule_day")
+}
+
+model Slot {
+  id            String      @id @default(uuid())
+  startTime     DateTime
+  endTime       DateTime
+  scheduleDayId String
+  scheduleDay   ScheduleDay @relation(fields: [scheduleDayId], references: [id])
+  bookings      Booking[]
+
+  @@map("slots")
+}
+
+model Guest {
+  id          String    @id @default(uuid())
+  name        String
+  document    String    @unique
+  birthDate   DateTime
+  phoneNumber String
+  bookings    Booking[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("guests")
+}
+
+model Booking {
+  id      String @id @default(uuid())
+  guestId String
+  slotId  String
+  guest   Guest  @relation(fields: [guestId], references: [id])
+  slot    Slot   @relation(fields: [slotId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("bookings")
+}
