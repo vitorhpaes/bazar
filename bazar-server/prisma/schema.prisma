@@ -33,7 +33,9 @@ model Event {
 
 model ScheduleDay {
   id        String   @id @default(uuid())
-  date      DateTime @unique
+  date      DateTime
+  startTime DateTime
+  endTime   DateTime
   slots     Slot[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
