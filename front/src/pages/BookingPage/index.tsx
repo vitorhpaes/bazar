@@ -1,10 +1,14 @@
-import { TextField, Box } from '@mui/material'
+import { TextField, Box, Container } from '@mui/material'
+import HeaderInfo from './components/HeaderInfo'
 
 const BookingPage: React.FC = () => {
   return (
-    <Box display="flex" flexDirection="column">
-      <TextField />
-    </Box>
+    <Container fixed>
+      <HeaderInfo />
+      <Box display="flex" flexDirection="column">
+        <TextField />
+      </Box>
+    </Container>
   )
 }
 

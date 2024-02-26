@@ -12,14 +12,16 @@
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "@fontsource-variable/comfortaa": "^5.0.18",
+    "@fontsource-variable/montserrat": "^5.0.17",
     "@mui/material": "^5.15.11",
     "@mui/styled-engine-sc": "^6.0.0-alpha.17",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.0.1",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.22.1",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6.1.8",
+    "zustand": "^4.5.1"
   },
   "devDependencies": {
     "@types/node": "^20.11.20",

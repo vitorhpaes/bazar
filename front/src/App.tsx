@@ -1,12 +1,17 @@
 import './App.css'
-import { ThemeProvider } from '@mui/material'
+import { ThemeProvider, CssBaseline } from '@mui/material'
 import { BrowserRouter } from 'react-router-dom'
 import AppRouter from './routes/AppRouter'
-import theme from './components/ui/theme'
+import { useThemeStore } from '@/store'
+import buildTheme from '@/components/ui/theme/theme.build'
 
 function App() {
+  const { mode } = useThemeStore()
+  const theme = buildTheme(mode)
+
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <BrowserRouter>
         <AppRouter />
       </BrowserRouter>
