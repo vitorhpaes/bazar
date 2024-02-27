@@ -65,13 +65,28 @@ export class SlotService {
     });
   }
 
-  async getSlotsAvailableByScheduleDay(scheduleDayId: string) {
+  async getAvailableSlots(date: Date) {
+    const startOfDay = new Date(date);
+    startOfDay.setUTCHours(0, 0, 0, 0);
+
+    const endOfDay = new Date(date);
+    endOfDay.setUTCHours(23, 59, 59, 999);
+
     const slots = await this.prisma.slot.findMany({
       where: {
-        scheduleDayId: scheduleDayId,
-        bookings: {
-          none: {},
-        },
+        AND: [
+          {
+            startTime: {
+              gte: startOfDay,
+              lte: endOfDay,
+            },
+          },
+          {
+            bookings: {
+              none: {},
+            },
+          },
+        ],
       },
       orderBy: {
         startTime: 'asc',

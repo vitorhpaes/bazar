@@ -1,5 +1,6 @@
 import { Controller, Body, Post, Get, Param } from '@nestjs/common';
 import { IsPublic } from 'src/decorators/isPublic.decorator';
+import { ParseDatePipe } from 'src/helpers/pipes/parse-date-pipe';
 import { ScheduleDayService } from 'src/modules/schedule-day/schedule-day.service';
 import { SlotService } from 'src/modules/slot/slot.service';
 import { CreateScheduleDayDto } from './dto/create-schedule-day.dto';
@@ -18,13 +19,13 @@ export class ScheduleDayController {
 
   @Get('/available')
   @IsPublic()
-  getScheduleDaysAvailable() {
-    return this.scheduleDayService.getScheduleDaysAvailable();
+  getScheduleAvailableDays() {
+    return this.scheduleDayService.getScheduleAvailableDays();
   }
 
-  @Get('/:scheduleDayId/slots/available')
+  @Get('/:date/slots/available')
   @IsPublic()
-  getSlotsAvailable(@Param('scheduleDayId') scheduleDayId: string) {
-    return this.slotsService.getSlotsAvailableByScheduleDay(scheduleDayId);
+  getAvailableSlots(@Param('date', ParseDatePipe) date: Date) {
+    return this.slotsService.getAvailableSlots(date);
   }
 }

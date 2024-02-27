@@ -23,19 +23,38 @@ export class ScheduleDayService {
     };
   }
 
-  async getScheduleDaysAvailable() {
-    const scheduleDay = await this.prisma.scheduleDay.findMany({
+  async getScheduleAvailableDays() {
+    const availableDays = await this.prisma.scheduleDay.findMany({
       where: {
-        slots: {
-          some: {
-            bookings: {
-              none: {},
+        AND: [
+          {
+            endTime: {
+              gt: new Date(),
             },
           },
-        },
+          {
+            slots: {
+              some: {
+                bookings: {
+                  none: {},
+                },
+              },
+            },
+          },
+        ],
       },
     });
 
-    return scheduleDay;
+    const groupedByDate: Date[] = [];
+    availableDays.forEach((day) => {
+      const alreadyExists = !!groupedByDate.find(
+        (existingDate) => day.date.toISOString() === existingDate.toISOString(),
+      );
+
+      if (alreadyExists) return;
+      groupedByDate.push(day.date);
+    });
+
+    return groupedByDate;
   }
 }
