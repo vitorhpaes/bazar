@@ -6,8 +6,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Typography,
-  Button
+  Typography
 } from '@mui/material'
 import { useIsMobile } from '@/hooks/useIsMobile'
 
@@ -19,9 +18,9 @@ const HeaderInfo = () => {
       alignItems="center"
       justifyContent="center"
       flexDirection="column"
-      mb={12}
-      mt={5}
       gap={3}
+      mt={4}
+      mb={5}
     >
       <img
         src={bannerSRC}
@@ -43,13 +42,6 @@ const HeaderInfo = () => {
           Inscrições de 04 a 07 de março de 2024
         </Typography>
       </Box>
-      <Button variant="contained">Contained</Button>
-      <Button variant="contained" disabled>
-        Disabled
-      </Button>
-      <Button variant="contained" href="#contained-buttons">
-        Link
-      </Button>
       <Accordion>
         <AccordionSummary
           expandIcon={<FiInfo size={30} />}

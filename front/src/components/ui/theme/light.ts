@@ -6,13 +6,13 @@ const light = {
     main: '#329b82',
     light: '#5fbeb1',
     dark: '#006d57',
-    contrastText: '#333333'
+    contrastText: '#fff'
   },
   secondary: {
     main: '#ffc107',
     light: '#ffd54f',
     dark: '#c79100',
-    contrastText: '#333333'
+    contrastText: '#fff'
   },
   background: {
     default: '#f0f2f5',
