@@ -2,8 +2,8 @@ import { TextField, Button, Grid, Typography } from '@mui/material'
 import { useFormik } from 'formik'
 import { GuestForm } from './guest.form.d'
 import { guestValidationSchema } from './guest.validation'
-import { useCreateGuest } from '@/services/queries/guest.hooks'
-import { DatePicker } from '@mui/x-date-pickers'
+import { useCreateGuest } from '@/services/queries/guest/guest.hooks'
+import { DesktopDatePicker } from '@mui/x-date-pickers'
 import MaskedTextField from '@/components/MaskedTextField'
 
 const CreateGuestForm = () => {
@@ -14,6 +14,8 @@ const CreateGuestForm = () => {
     validationSchema: guestValidationSchema,
     onSubmit: formData => createGuest.mutate(formData)
   })
+
+  console.log({ formik })
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -51,8 +53,10 @@ const CreateGuestForm = () => {
           />
         </Grid>
         <Grid item>
-          <DatePicker
+          <DesktopDatePicker
             sx={{ width: '100%' }}
+            views={['day', 'month', 'year']}
+            showDaysOutsideCurrentMonth
             components={{
               TextField: props => (
                 <TextField
@@ -69,7 +73,7 @@ const CreateGuestForm = () => {
             name="birthDate"
             label="Data de nascimento"
             value={formik.values.birthDate}
-            onChange={formik.handleChange}
+            onChange={date => formik.setFieldValue('birthDate', date)}
           />
         </Grid>
         <Grid item>
