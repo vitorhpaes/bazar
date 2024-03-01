@@ -4,5 +4,16 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "deleteOutDir": true
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "nest-cli": {
+    "assets": [
+      "src/public/**/*"
+    ],
+    "watchAssets": true
   }
 }

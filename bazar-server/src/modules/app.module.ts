@@ -1,3 +1,5 @@
+import { ServeStaticModule } from '@nestjs/serve-static';
+
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -11,8 +13,13 @@ import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from 'src/helpers/guard/jwt-auth-guard';
 import { APP_GUARD } from '@nestjs/core';
 
+import { join } from 'path';
+
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../../../', 'public'),
+    }),
     EventsModule,
     ScheduleDayModule,
     SlotModule,

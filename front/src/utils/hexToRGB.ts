@@ -1,4 +1,4 @@
-function hexToRgb(hex) {
+function hexToRgb(hex: string) {
   // Remover o "#" se estiver presente
   hex = hex.replace(/^#/, '')
 

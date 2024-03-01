@@ -8,7 +8,7 @@ const CookieConsent: React.FC = () => {
 
   const handleClose = (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    event?: Event | React.SyntheticEvent<any, Event>,
+    _event?: Event | React.SyntheticEvent<any, Event>,
     reason?: string
   ) => {
     if (reason === 'clickaway') {
