@@ -1,8 +1,17 @@
 import { Alert, Box, Typography } from '@mui/material'
 import GuestBookingAlert from './components/GuestBookingAlert'
 import DownloadBookingProof from './components/DownloadBookingProof'
+import { useGuestStore } from '@/store'
+import { Navigate } from 'react-router-dom'
+import { usePublicRoutes } from '@/routes/context/hook'
 
 const BookingProofPage = () => {
+  const { guest, booking } = useGuestStore()
+  const publicRoutes = usePublicRoutes()
+
+  if (!guest) return <Navigate to={publicRoutes.BOOKING} />
+  if (!booking) return <Navigate to={publicRoutes.FINISH} />
+
   return (
     <Box display="flex" flexDirection="column">
       <Alert severity="warning" sx={{ mb: 2 }}>

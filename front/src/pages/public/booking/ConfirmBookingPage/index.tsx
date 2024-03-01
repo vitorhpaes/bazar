@@ -2,7 +2,7 @@ import { useCallback, useState, useMemo } from 'react'
 import { useSubmitBooking } from '@/services/queries/booking/booking.hooks'
 import { FiInfo } from 'react-icons/fi'
 import { useGuestStore, useToastStore } from '@/store'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { usePublicRoutes } from '@/routes/context/hook'
 import {
   Box,
@@ -19,7 +19,7 @@ import {
 
 const ConfirmBookingPage = () => {
   const submitBooking = useSubmitBooking()
-  const { guest, selectedStartTime } = useGuestStore()
+  const { guest, selectedStartTime, booking } = useGuestStore()
   const navigate = useNavigate()
   const publicRoutes = usePublicRoutes()
   const handleToast = useToastStore(state => state.handleToast)
@@ -87,6 +87,15 @@ const ConfirmBookingPage = () => {
 
   const isDisabledSubmitButton = useMemo(() => !acceptedTerms, [acceptedTerms])
 
+  const guestHasBooking = useMemo(
+    () => guest?.id === booking?.guestId,
+    [guest, booking]
+  )
+
+  if (!guest) return <Navigate to={publicRoutes.BOOKING} />
+  if (!selectedStartTime) return <Navigate to={publicRoutes.FINISH} />
+  if (booking && guestHasBooking) return <Navigate to={publicRoutes.PROOF} />
+
   return (
     <Box>
       <Typography variant="h6" mb={2} align="center">
@@ -102,9 +111,11 @@ const ConfirmBookingPage = () => {
             Documento: {guest.document}
           </Typography>
           <Typography variant="body1" fontWeight="600">
+            Telefone: {guest.phoneNumber}
+          </Typography>
+          <Typography variant="body1" fontWeight="600">
             Horário selecionado: {formattedSelectedStartTime}
           </Typography>
-          {/* Adicione mais informações do usuário conforme necessário */}
         </Alert>
       )}
 

@@ -6,7 +6,7 @@ import SelectAvailableDay from '@/components/SelectAvailableDay'
 import { useGuestStore, useToastStore } from '@/store'
 import { useMemo, useCallback } from 'react'
 import SelectAvailableSlot from '@/components/SelectAvailableSlot'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { usePublicRoutes } from '@/routes/context/hook'
 
 const FinishBookingForm = () => {
@@ -43,6 +43,8 @@ const FinishBookingForm = () => {
     () => !formik.isValid,
     [formik.isValid]
   )
+
+  if (!guest) return <Navigate to={publicRoutes.BOOKING} />
 
   return (
     <form onSubmit={formik.handleSubmit}>

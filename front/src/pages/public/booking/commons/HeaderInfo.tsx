@@ -1,5 +1,4 @@
 import bannerSRC from '@/assets/images/banner.png'
-import EventDetails from '@/pages/BookingPage/components/EventDetails'
 import { FiInfo } from 'react-icons/fi'
 import {
   Box,
@@ -9,6 +8,7 @@ import {
   Typography
 } from '@mui/material'
 import { useIsMobile } from '@/hooks/useIsMobile'
+import EventDetails from './EventDetails'
 
 const HeaderInfo = () => {
   const isMobile = useIsMobile()
