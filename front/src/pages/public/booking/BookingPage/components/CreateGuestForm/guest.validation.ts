@@ -5,6 +5,6 @@ import { GuestForm } from './guest.form.d'
 export const guestValidationSchema = yup.object().shape<Shape<GuestForm>>({
   name: yup.string().required('Nome é obrigatório'),
   document: yup.string().required('Documento é obrigatório'),
-  birthDate: yup.date().required('Data de nascimento é obrigatória').nullable(),
+  birthDate: yup.date().required('Data de nascimento é obrigatória'),
   phoneNumber: yup.string().required('Telefone é obrigatório')
 })

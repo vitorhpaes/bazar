@@ -1,4 +1,3 @@
-import { BookingForm } from '@/pages/BookingPage/components/FinishBookingForm/booking.form'
 import {
   fetchAvailableDays,
   fetchAvailableSlots,
@@ -7,15 +6,17 @@ import {
 import { useMutation, useQuery } from 'react-query'
 import { normalizeBooking, normalizeSlot } from './booking.normalizer'
 import { useGuestStore } from '@/store'
+import { CreateBookingPayload } from './booking.dto.d'
 
 export const useSubmitBooking = () => {
   const { setBooking } = useGuestStore()
   return useMutation(
     ['submit-booking'],
-    (formData: BookingForm) => {
+    (formData: CreateBookingPayload & { acceptedTerms: boolean }) => {
       return fetchSubmitBooking({
         guestId: formData.guestId,
-        startTime: formData.startTime
+        startTime: formData.startTime,
+        acceptedTerms: formData.acceptedTerms
       })
     },
     {

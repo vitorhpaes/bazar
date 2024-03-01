@@ -9,7 +9,7 @@ export class BookingsController {
 
   @Post()
   @IsPublic()
-  book(@Body() { startTime, guestId }: CreateBookingDto) {
-    return this.booking.book(startTime, guestId);
+  book(@Body() { startTime, guestId, acceptedTerms }: CreateBookingDto) {
+    return this.booking.book(startTime, guestId, acceptedTerms);
   }
 }

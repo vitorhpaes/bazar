@@ -124,7 +124,7 @@ export class SlotService {
       })
       .catch(() => {
         throw new NotFoundException({
-          message: 'Não existem mais vagas livres para o horário escolhido',
+          message: 'Não existem vagas livres para o horário escolhido',
         });
       });
   }

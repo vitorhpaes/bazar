@@ -9,6 +9,7 @@ import queryClient from './services/queryClient'
 import AppRouter from './routes/AppRouter'
 import LocalizationWrapper from '@/components/LocalizationWrapper'
 import ToastSnackbar from '@/components/ToastSnackbar'
+import CookieConsent from '@/components/CookieConsent'
 
 function App() {
   const { mode } = useThemeStore()
@@ -19,10 +20,11 @@ function App() {
       <ThemeProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
           <CssBaseline />
+          <ToastSnackbar />
+          <CookieConsent />
           <BrowserRouter>
             <AppRouter />
           </BrowserRouter>
-          <ToastSnackbar />
         </QueryClientProvider>
       </ThemeProvider>
     </LocalizationWrapper>

@@ -1,6 +1,6 @@
 import bazarRequest from '@/services/request'
 import {
-  AvailableSlotsResponse,
+  AvailableQuickSlotsResponse,
   CreateBookingPayload,
   CreateBookingResponse
 } from './booking.dto.d'
@@ -15,7 +15,7 @@ export function fetchAvailableDays() {
 
 export function fetchAvailableSlots(date: Date) {
   const dateString = date.toISOString().split('T')[0]
-  return bazarRequest.get<AvailableSlotsResponse[]>(
+  return bazarRequest.get<AvailableQuickSlotsResponse[]>(
     `/schedule-day/${dateString}/slots/available`
   )
 }

@@ -1,4 +1,7 @@
 {
     "INDEX": "/",
-    "BOOKING": "/booking"
+    "BOOKING": "/booking",
+    "FINISH": "/booking/finish",
+    "CONFIRM": "/booking/confirm",
+    "PROOF": "/booking/proof"
 }

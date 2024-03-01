@@ -3,16 +3,30 @@ import { useFormik } from 'formik'
 import { GuestForm } from './guest.form.d'
 import { guestValidationSchema } from './guest.validation'
 import { useCreateGuest } from '@/services/queries/guest/guest.hooks'
-import { DesktopDatePicker } from '@mui/x-date-pickers'
 import MaskedTextField from '@/components/MaskedTextField'
+import { useNavigate } from 'react-router-dom'
+import { usePublicRoutes } from '@/routes/context/hook'
+import { useCallback } from 'react'
 
 const CreateGuestForm = () => {
+  const navigate = useNavigate()
+  const publicRoutes = usePublicRoutes()
   const createGuest = useCreateGuest()
+
+  const goToFinishBookingPage = useCallback(() => {
+    navigate(publicRoutes.FINISH)
+  }, [navigate, publicRoutes])
+
   const formik = useFormik<GuestForm>({
     initialValues: {} as GuestForm,
     validateOnChange: true,
     validationSchema: guestValidationSchema,
-    onSubmit: formData => createGuest.mutate(formData)
+    onSubmit: formData =>
+      createGuest.mutate(formData, {
+        onSuccess() {
+          goToFinishBookingPage()
+        }
+      })
   })
 
   console.log({ formik })
@@ -29,6 +43,7 @@ const CreateGuestForm = () => {
             required
             id="name"
             name="name"
+            type="name"
             label="Nome completo"
             value={formik.values.name}
             onChange={formik.handleChange}
@@ -53,27 +68,23 @@ const CreateGuestForm = () => {
           />
         </Grid>
         <Grid item>
-          <DesktopDatePicker
-            sx={{ width: '100%' }}
-            views={['day', 'month', 'year']}
-            showDaysOutsideCurrentMonth
-            components={{
-              TextField: props => (
-                <TextField
-                  error={
-                    formik.touched.birthDate && Boolean(formik.errors.birthDate)
-                  }
-                  helperText={
-                    formik.touched.birthDate && String(formik.errors.birthDate)
-                  }
-                  {...props}
-                />
-              )
-            }}
+          <TextField
+            fullWidth
+            required
+            id="birthDate"
             name="birthDate"
+            type="date"
             label="Data de nascimento"
+            InputLabelProps={{
+              shrink: true
+            }}
             value={formik.values.birthDate}
-            onChange={date => formik.setFieldValue('birthDate', date)}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.birthDate && Boolean(formik.errors.birthDate)}
+            helperText={
+              formik.touched.birthDate && (formik.errors.birthDate as string)
+            }
           />
         </Grid>
         <Grid item>

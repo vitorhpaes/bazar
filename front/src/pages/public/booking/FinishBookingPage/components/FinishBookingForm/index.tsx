@@ -1,46 +1,53 @@
-import { Button, Grid, Typography } from '@mui/material'
+import { Box, Button, Grid, Typography } from '@mui/material'
 import { useFormik } from 'formik'
 import { bookingValidationSchema } from './booking.validation'
 import { BookingForm } from './booking.form.d'
-import { useSubmitBooking } from '@/services/queries/booking/booking.hooks'
 import SelectAvailableDay from '@/components/SelectAvailableDay'
 import { useGuestStore, useToastStore } from '@/store'
-import { useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
 import SelectAvailableSlot from '@/components/SelectAvailableSlot'
+import { useNavigate } from 'react-router-dom'
+import { usePublicRoutes } from '@/routes/context/hook'
 
 const FinishBookingForm = () => {
-  const submitBooking = useSubmitBooking()
-  const { guest } = useGuestStore()
+  const { guest, setSelectedStartTime } = useGuestStore()
+  const navigate = useNavigate()
+  const publicRoutes = usePublicRoutes()
   const handleToast = useToastStore(state => state.handleToast)
 
+  const goBack = () => navigate(-1)
+
+  const goToConfirmSchedulePage = useCallback(() => {
+    navigate(publicRoutes.CONFIRM)
+  }, [navigate, publicRoutes])
+
   const formik = useFormik<BookingForm>({
-    initialValues: {
-      guestId: guest?.id
-    } as BookingForm,
+    initialValues: {} as BookingForm,
     validateOnChange: true,
+    validateOnMount: true,
     validationSchema: bookingValidationSchema,
     onSubmit: formData => {
-      submitBooking.mutate(formData, {
-        onSuccess() {
-          handleToast({
-            type: 'success',
-            description: 'Horário agendado com sucesso!',
-            timer: 5000
-          })
-        }
+      setSelectedStartTime(formData.startTime)
+      goToConfirmSchedulePage()
+
+      handleToast({
+        type: 'info',
+        description: 'Confirme o agendamento'
       })
     }
   })
 
+  const simpleGuestName = useMemo(() => guest?.name.split(' ')[0], [guest])
+
   const isDisabledSubmitButton = useMemo(
-    () => !formik.values.scheduleDate,
-    [formik.values.scheduleDate]
+    () => !formik.isValid,
+    [formik.isValid]
   )
 
   return (
     <form onSubmit={formik.handleSubmit}>
       <Typography variant="h6" mb={2} align="center">
-        Selecione o seu horário
+        {simpleGuestName}, selecione seu horário
       </Typography>
       <Grid container spacing={2} direction="column" mb={4}>
         <Grid item md={12}>
@@ -79,6 +86,22 @@ const FinishBookingForm = () => {
               Finalizar agendamento
             </Button>
           </Grid>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            mt={12}
+          >
+            <Button
+              color="inherit"
+              variant="contained"
+              type="button"
+              size="large"
+              onClick={goBack}
+            >
+              Voltar
+            </Button>
+          </Box>
         </Grid>
       </Grid>
     </form>

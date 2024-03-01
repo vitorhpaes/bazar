@@ -9,7 +9,7 @@ export class BookingsService {
     private readonly slot: SlotService,
   ) {}
 
-  async book(startDate: Date, guestId: string) {
+  async book(startDate: Date, guestId: string, acceptedTerms: boolean) {
     const slot = await this.slot.pickSlot(startDate);
 
     const guestBookings = await this.findByGuestId(guestId);
@@ -21,10 +21,20 @@ export class BookingsService {
       });
     }
 
+    if (!acceptedTerms) {
+      throw new BadRequestException({
+        message: 'Precisa aceitar os termos de uso',
+      });
+    }
+
     return await this.prisma.booking.create({
       data: {
         slotId: slot.id,
         guestId,
+        acceptedTerms,
+      },
+      include: {
+        slot: true,
       },
     });
   }

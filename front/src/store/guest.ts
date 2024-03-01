@@ -5,9 +5,11 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 
 interface GuestStoreProps {
   guest?: NormalizedGuest
+  selectedStartTime?: Date
   booking?: NormalizedBooking
   cookieConsent?: boolean
   setGuest: (guest: NormalizedGuest) => void
+  setSelectedStartTime: (startTime: Date) => void
   setBooking: (booking: NormalizedBooking) => void
   setCookieConsent: (consent: boolean) => void
 }
@@ -17,6 +19,8 @@ const useGuestStore = create(
     set => ({
       setBooking: (booking: NormalizedBooking) => set({ booking }),
       setCookieConsent: (consent: boolean) => set({ cookieConsent: consent }),
+      setSelectedStartTime: (startTime: Date) =>
+        set({ selectedStartTime: startTime }),
       setGuest: (guest: NormalizedGuest) => set({ guest })
     }),
     {
