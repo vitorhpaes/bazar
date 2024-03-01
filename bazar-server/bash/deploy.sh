@@ -9,8 +9,8 @@ done
 
 echo "Building in MODE: $mode"
 
-REACT_APP_DIR="./front"
-NESTJS_APP_DIR="./bazar-server"
+REACT_APP_DIR="../front"
+NESTJS_APP_DIR="../"
 PUBLIC_DIR="$NESTJS_APP_DIR/public"
 
 echo "Iniciando o build do React"

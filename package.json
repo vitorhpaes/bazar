@@ -1,8 +1,0 @@
-{
-    "name": "bazar",
-    "private": true,
-    "version": "1.0.0",
-    "scripts": {
-        "build:prod": "./bash/deploy.sh mode=prod"
-    }
-}
