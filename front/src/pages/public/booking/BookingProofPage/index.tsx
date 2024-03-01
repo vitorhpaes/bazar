@@ -21,7 +21,13 @@ const BookingProofPage = () => {
         </Typography>
       </Alert>
       <GuestBookingAlert />
-      <Box mt={8} display="flex" alignItems="center" justifyContent="center">
+      <Box
+        mt={4}
+        mb={3}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
         <DownloadBookingProof />
       </Box>
     </Box>
