@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import createDefaultUser from './seeders/user';
+import createDefaultUser from 'prisma/seed/seeders/user';
 
 const prisma = new PrismaClient();
 
