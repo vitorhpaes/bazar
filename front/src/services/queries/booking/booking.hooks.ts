@@ -51,9 +51,9 @@ export const useAvailableSlots = (date: Date) =>
       return availableSlots.map(normalizeSlot)
     },
     {
-      cacheTime: 1000 * 5,
-      staleTime: 1000 * 5,
+      cacheTime: 1000 * 10,
+      staleTime: 1000 * 10,
       refetchIntervalInBackground: true,
-      refetchInterval: 1000 * 5
+      refetchInterval: 1000 * 10
     }
   )

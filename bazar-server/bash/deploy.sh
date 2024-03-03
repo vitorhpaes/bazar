@@ -10,19 +10,19 @@ done
 echo "Building in MODE: $mode"
 
 REACT_APP_DIR="../front"
-NESTJS_APP_DIR="../"
+NESTJS_APP_DIR="../bazar-server"
 PUBLIC_DIR="$NESTJS_APP_DIR/public"
 
 echo "Iniciando o build do React"
 
 cd $REACT_APP_DIR
-yarn install
-yarn build --mode=$mode
+# yarn install
+# yarn build --mode=$mode
 
 echo "Copiando arquivos de build para o diretório público do NestJS..."
 mkdir -p $PUBLIC_DIR
 rm -rf $PUBLIC_DIR/*
-cp -R dist/* ../$PUBLIC_DIR
+cp -R dist/* $PUBLIC_DIR
 
 echo "Iniciando o servidor NestJS..."
 cd ../$NESTJS_APP_DIR
