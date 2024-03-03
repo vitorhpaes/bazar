@@ -11,10 +11,7 @@ export class BookingsService {
 
   async book(startDate: Date, guestId: string, acceptedTerms: boolean) {
     const slot = await this.slot.pickSlot(startDate);
-    console.log({ slot, startDate });
     const guestBookings = await this.findByGuestId(guestId);
-
-    return;
 
     if (guestBookings.length > 0) {
       throw new BadRequestException({
