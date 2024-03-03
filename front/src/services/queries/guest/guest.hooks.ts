@@ -4,6 +4,7 @@ import { useGuestStore } from '@/store'
 import { removeMask } from '@/utils/removeMask'
 import { useMutation } from 'react-query'
 import { GuestForm } from '@/pages/public/booking/BookingPage/components/CreateGuestForm/guest.form'
+import { parseDateString } from '@/utils/date'
 
 export const useCreateGuest = () => {
   const { setGuest: setGuestStore } = useGuestStore()
@@ -12,7 +13,7 @@ export const useCreateGuest = () => {
     ({ phoneNumber, birthDate, ...formData }: GuestForm) =>
       fetchCreateGuest({
         ...formData,
-        birthDate: new Date(birthDate),
+        birthDate: new Date(parseDateString(birthDate)),
         phoneNumber: removeMask(phoneNumber)
       }),
     {

@@ -21,15 +21,14 @@ const CreateGuestForm = () => {
     initialValues: {} as GuestForm,
     validateOnChange: true,
     validationSchema: guestValidationSchema,
-    onSubmit: formData =>
+    onSubmit: formData => {
       createGuest.mutate(formData, {
         onSuccess() {
           goToFinishBookingPage()
         }
       })
+    }
   })
-
-  console.log({ formik })
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -68,16 +67,13 @@ const CreateGuestForm = () => {
           />
         </Grid>
         <Grid item>
-          <TextField
+          <MaskedTextField
             fullWidth
+            mask="date"
             required
             id="birthDate"
             name="birthDate"
-            type="date"
             label="Data de nascimento"
-            InputLabelProps={{
-              shrink: true
-            }}
             value={formik.values.birthDate}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
